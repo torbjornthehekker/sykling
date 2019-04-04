@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sykkelchat</title>
+</head>
+<body>
+  <header>
+    <ul>
+      <li><a href="index.html">Heim</a></li>
+      <li><a href="xtr.html">Drivverk</a></li>
+      <li><a href="hjul.html">Hjul og dekk</a>
+      <li><a href="dempar.html">Dempargaffel</a></li>
+      <li><a href="storagediv.html">Last opp sykkelbilder</a></li>
+      <li><a class="active" href="sykkelchat.html">Sykkelchat</a></li>
+    </ul>
+  </header>
+   <h1>Sykkelchat</h1>
+    <form id="skjema"> 
+      <input type="text" id="inpAvsender" required placeholder="kven er du?"> 
+      <input type="text" id="inpMening" required placeholder="kva seier du?"> 
+      <button type="submit" class="butt on">SEND</button>
+  </form> 
+  <article id="txtMeldinger"></article>
+<script src="https://www.gstatic.com/firebasejs/5.8.2/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyAd_V-LOPVQLH5kQu7N0IJNFjLMHJBmV8Q",
+    authDomain: "kult-f4fcc.firebaseapp.com",
+    databaseURL: "https://kult-f4fcc.firebaseio.com",
+    projectId: "kult-f4fcc",
+    storageBucket: "",
+    messagingSenderId: "198066965041"
+  };
+  firebase.initializeApp(config);
+</script>
+<script>
+  let database = firebase.database(); 
+  let meldinger = database.ref("meldinger"); 
+  let skjema = document. 
+  getElementById("skjema"); 
+  let inpAvsender = document. 
+  getElementById("inpAvsender");
+  let inpMening = document. 
+  getElementById("inpMening"); 
+  let txtMeldinger = document. 
+  getElementById("txtMeldinger"); 
+  function visMelding(snapshot) { 
+    let melding = snapshot.val(); 
+    let meldingTekst = `<p> 
+    <b>${melding.avsender}:</b> 
+    <i>${melding.tekst}</i>
+  </p>`; 
+txtMeldinger.innerHTML = txtMeldinger. 
+innerHTML + meldingTekst;
+}
+function regNyMelding(evt) { 
+  evt.preventDefault(); 
+  var nyMelding = { 
+    avsender: inpAvsender.value, 
+    tekst: inpMening.value
+};
+meldinger.push(nyMelding); 
+inpMening.value = " ";
+}
+meldinger.on("child_added", visMelding); 
+skjema.onsubmit = regNyMelding;
+</script>
+</body>
+
+<style>
+  
+  header{
+  background-color: lightgrey;
+}
+ul{
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+  position:fixed;
+  top:0;
+  width:100%;
+  grid-row:1;
+}
+li{
+  float:left;
+  /*border-right: 1px solid #bbb; */
+}
+li>a{
+  display: block;
+    padding: 14px 16px;
+    color:white;
+    text-align: center;
+    text-decoration: none;
+    font-size:20px;
+}
+li a:hover{
+    background-color: #111;
+}
+.active{
+    background-color:green;
+}
+body{
+      background-color: pink;
+      font-family: arial;
+    }
+h1{
+      margin-top:2em;
+      font-size: 4em;
+      text-decoration: underline;
+      font-weight: 800;
+      text-align: center;
+      font-family: arial;
+    }
+form{
+      text-align: center;
+      font-family:arial;
+      size: 4em;
+    }
+#txtMeldinger{
+      text-align: center;
+    }
+  </style>
+</html>

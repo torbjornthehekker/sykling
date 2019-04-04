@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+	<html lang="no">
+	<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Sykkelbilete</title>
+
+	</head>
+	<body>
+		<div class="navbar">
+			<ul>
+			<li><a href="index.html">Heim</a></li>
+			<li><a href="xtr.html">Drivverk</a></li>
+			<li><a href="hjul.html">Hjul og dekk</a>
+			<li><a href="dempar.html">Dempargaffel</a></li>
+			<li><a class="active" href="storagediv.html">Last opp sykkelbilder</a></li>
+			<li><a href="sykkelchat.html">Sykkelchat</a></li>
+			</ul>
+		</div>
+		<h1>Last opp dine bileter til biletebloggen!</h1>
+	<header>
+	<form id="skjema">
+	<label>1</label>
+	<input type="file" id="inpBilde" required>
+	<label>2</label>
+	<input type="text" id="inpTekst" required placeholder="Beskriv bildet">
+	<label>3</label>
+	<button type="submit">Last opp bilete</button>
+	</form>
+	</header>
+	
+	<main></main>
+	
+	<div id="overlay">
+	<img src="bilder/giphy.gif">
+	</div>
+
+	
+	<script src="https://www.gstatic.com/firebasejs/5.8.5/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyCK8jvV-9V-1TE-c0GDWmp7MVLZpT8R2Tw",
+    authDomain: "storage-a9d85.firebaseapp.com",
+    databaseURL: "https://storage-a9d85.firebaseio.com",
+    projectId: "storage-a9d85",
+    storageBucket: "storage-a9d85.appspot.com",
+    messagingSenderId: "444042841605"
+  };
+  firebase.initializeApp(config);
+</script>
+	
+	
+<script>
+	const inpBilde = document.querySelector("#inpBilde");
+	const inpTekst = document.querySelector("#inpTekst");
+	const skjema = document.querySelector("#skjema");
+	const overlay = document.querySelector("#overlay");
+	
+	const main = document.querySelector("main");
+	
+	// Firebase
+	const db = firebase.database();
+	const storage = firebase.storage();
+	
+	const bloggen = db.ref("bloggen");
+	
+	
+	// Funksjon som lagrer bilde i databasen
+	function lagreBilde(evt) {
+	evt.preventDefault();
+	
+	// Viser overlay
+	overlay.style.display = "flex";
+	
+	// Bilde som skal lastes opp
+	const bilde = inpBilde.files[0];
+	
+	// Hvor skal vi lagre bildet
+	const lagringsplass = storage.ref("bloggbilder/" + ( +new Date() ) + bilde.name);
+	
+	// Vi laster opp bildet til storage
+	lagringsplass.put(bilde)
+	.then( bilde => bilde.ref.getDownloadURL() )
+	.then( url => {
+	bloggen.push({
+	url: url,
+	tekst: inpTekst.value
+	});
+	skjema.reset();
+	overlay.style.display = "none";
+	} );
+	
+	}
+	
+	function visBilde(snap) {
+	const key = snap.key;
+	const data = snap.val();
+	
+	main.innerHTML =  main.innerHTML +`
+	<article>
+	<img src="${data.url}">
+	<p>${data.tekst}</p>
+	</article>
+	`;
+	}
+	
+	
+	// Event Listeners
+	skjema.addEventListener("submit", lagreBilde);
+	bloggen.on("child_added", visBilde);
+
+</script>
+	</body>
+	</html>
+<style>
+
+.navbar{
+	display:grid;
+	grid-template-columns:1fr;
+	grid-template-rows: 100px;
+	background-color: lightgrey;
+}
+	ul{
+	display:grid;
+	grid-template-columns: repeat(6, 1fr);
+	list-style-type: none;
+	margin: 0;
+ 	padding: 0;
+ 	overflow: hidden;
+ 	background-color: #333;
+ 	position:fixed;
+ 	top:0;
+ 	width:100%;
+}
+	li{
+	float:left;
+}
+	li>a{
+	display:block;
+  	padding: 14px 16px;
+  	color:white;
+  	text-align: center;
+  	text-decoration: none;
+  	font-size: 20px;
+}
+	li a:hover{
+  	background-color: #111;
+}
+	.active{
+  	background-color:green;
+}
+	h1{
+	font-size: 3em;
+	text-align: center;
+	background-color: lightyellow;
+	}
+	body {
+	margin: 0;
+	font-family: arial;
+}
+	
+	header {
+	background-color: darkblue;
+}
+	
+	header #skjema {
+	padding: 1rem;
+	display: grid;
+	grid-auto-flow: column;
+	justify-content: center;
+	align-items: center;
+	grid-gap: 1rem;
+}
+
+	#skjema input[type=text] {
+	padding: 0.5rem;
+}
+	
+	header label {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center; 
+	padding: 0.5rem;
+	width: 2rem;
+	height: 2rem;
+	font-weight: 800;
+	background-color: darkorange;
+	color: white;
+	border-radius: 50%;
+}
+	
+	main {
+	padding: 1rem;
+	display: grid;
+	grid-template-columns: repeat(6, 1fr);
+	grid-gap: 1rem;
+	background-color:lightyellow;
+}
+	
+	main article {
+	display: grid;
+	grid-auto-flow: row;
+	background-color: pink;
+	cursor: pointer;
+}
+	
+	main img {
+	width: 100%;
+}
+	
+	main article p {
+	padding: 1rem;
+	text-align: center;
+	justify-self: center;
+	align-self: end; 
+}
+	
+	#overlay {
+	position: absolute;
+	left: 0;
+	top: 0;
+	background-color: rgba(0, 0, 0, 0.85);
+	display: none;
+	align-items: center;
+	justify-content: center;
+	width: 100vw;
+	height: 100vh;
+}
+
+	#overlay img {
+	width: 250px;
+}
+ </style>
+
+
