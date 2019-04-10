@@ -4,7 +4,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>Sykkelbilete</title>
+	<title>Sykkelbiletene</title>
 
 	</head>
 	<body>
@@ -27,6 +27,8 @@
 	<input type="text" id="inpTekst" required placeholder="Beskriv bildet">
 	<label>3</label>
 	<button type="submit">Last opp bilete</button>
+	Søk bilder: <input id="sokefelt" type="text">
+
 	</form>
 	</header>
 	
@@ -57,14 +59,21 @@
 	const inpTekst = document.querySelector("#inpTekst");
 	const skjema = document.querySelector("#skjema");
 	const overlay = document.querySelector("#overlay");
-	
 	const main = document.querySelector("main");
+	const sokefelt = document.getElementById("sokefelt");
+    var soketekst ="";
 	
 	// Firebase
 	const db = firebase.database();
 	const storage = firebase.storage();
 	
 	const bloggen = db.ref("bloggen");
+
+	sokefelt.oninput = sok;
+   	function sok () {
+   		soketekst=sokefelt.value;
+		visUtvalg();
+    }
 	
 	
 	// Funksjon som lagrer bilde i databasen
@@ -93,7 +102,14 @@
 	} );
 	
 	}
-	
+	function visUtvalg() {
+        main.innerHTML = " ";
+        bloggen
+               .orderByChild("tekst")
+               .startAt(soketekst)
+               .endAt(soketekst + '\uf8ff')
+               .on("child_added", visBilde);
+    }
 	function visBilde(snap) {
 	const key = snap.key;
 	const data = snap.val();
