@@ -26,19 +26,15 @@
 	<label>2</label>
 	<input type="text" id="inpTekst" required placeholder="Beskriv bildet">
 	<label>3</label>
-	<button type="submit">Last opp bilete</button>
-	Søk bilder: <input id="sokefelt" type="text">
+	<button class="button" type="submit">Last opp bilete</button>
+	<p class="søk"> Søk: </p><input id="sokefelt" type="text">
 
 	</form>
 	</header>
-	
 	<main></main>
-	
 	<div id="overlay">
 	<img src="bilder/giphy.gif">
 	</div>
-
-	
 	<script src="https://www.gstatic.com/firebasejs/5.8.5/firebase.js"></script>
 <script>
   // Initialize Firebase
@@ -165,20 +161,24 @@
   	background-color: #111;
 }
 	.active{
-  	background-color:green;
+  	background-color:#405d27;
 }
 	h1{
 	font-size: 3em;
 	text-align: center;
-	background-color: lightyellow;
+	background-color: #405d27;
+	padding:20px;
+	border-radius: 25px;
+	text-align: center;
 	}
+	
 	body {
 	margin: 0;
 	font-family: arial;
 }
 	
 	header {
-	background-color: blue;
+	background-color: #82b74b;
 }
 	
 	header #skjema {
@@ -191,20 +191,20 @@
 }
 
 	#skjema input[type=text] {
-	padding: 0.5rem;
+	padding: 0.7rem;
 }
 	
 	header label {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center; 
-	padding: 0.5rem;
-	width: 2rem;
-	height: 2rem;
+	padding: 1rem;
+	width: 1.3rem;
+	height: 1.3rem;
 	font-weight: 800;
-	background-color: darkorange;
-	color: white;
-	border-radius: 50%;
+	background-color: #c1946a;
+	color: teal;
+	border-radius: 25%;
 }
 	
 	main {
@@ -212,13 +212,13 @@
 	display: grid;
 	grid-template-columns: repeat(6, 1fr);
 	grid-gap: 1rem;
-	background-color:lightyellow;
+	background-color:#3e4444;
 }
 	
 	main article {
 	display: grid;
 	grid-auto-flow: row;
-	background-color: pink;
+	background-color: #c1946a;
 	cursor: pointer;
 }
 	
@@ -247,6 +247,38 @@
 
 	#overlay img {
 	width: 250px;
+}
+.button {
+  display: inline-block;
+  padding: 10px 10px;
+  font-size: 24px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  color: white;
+  background-color: #c1946a;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 5px 5px #999;
+}
+
+.button:hover {background-color: #82b74b}
+
+.button:active {
+  background-color: #405d27;
+  box-shadow:  5px #405d27;
+  transform: translateY(4px);
+}
+.søk{
+	font-size: 30px;
+	font-weight: 600;
+}
+#inpBilde{
+	font-size:30px;
+	width: 12em;
+	font-weight: 600;
+
 }
  </style>
 
