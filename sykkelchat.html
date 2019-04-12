@@ -18,22 +18,22 @@
     <form id="skjema"> 
       <input type="text" id="inpAvsender" required placeholder="kven er du?"> 
       <input type="text" id="inpMening" required placeholder="kva seier du?"> 
-      <button type="submit" class="butt on">SEND</button>
+      <button type="submit" class="button">SEND</button>
   </form> 
   <article id="txtMeldinger"></article>
-<script src="https://www.gstatic.com/firebasejs/5.8.2/firebase.js"></script>
-<script>
-  // Initialize Firebase
-  var config = {
-    apiKey: "AIzaSyAd_V-LOPVQLH5kQu7N0IJNFjLMHJBmV8Q",
-    authDomain: "kult-f4fcc.firebaseapp.com",
-    databaseURL: "https://kult-f4fcc.firebaseio.com",
-    projectId: "kult-f4fcc",
-    storageBucket: "",
-    messagingSenderId: "198066965041"
-  };
-  firebase.initializeApp(config);
-</script>
+<script src="https://www.gstatic.com/firebasejs/5.8.5/firebase.js"></script>
+  <script>
+    // Initialize Firebase
+    var config = {
+    apiKey: "AIzaSyCK8jvV-9V-1TE-c0GDWmp7MVLZpT8R2Tw",
+    authDomain: "storage-a9d85.firebaseapp.com",
+    databaseURL: "https://storage-a9d85.firebaseio.com",
+    projectId: "storage-a9d85",
+    storageBucket: "storage-a9d85.appspot.com",
+    messagingSenderId: "444042841605"
+    };
+    firebase.initializeApp(config);
+  </script>
 <script>
   let database = firebase.database(); 
   let meldinger = database.ref("meldinger"); 
@@ -124,5 +124,40 @@ form{
 #txtMeldinger{
       text-align: center;
     }
+    .button {
+  display: inline-block;
+  padding: 5px 30px;
+  font-size: 24px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  color:  black;
+  background-color: white;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 5px 5px #999;
+}
+
+.button:hover {background-color: #82b74b}
+
+.button:active {
+  background-color: #405d27;
+  box-shadow:  5px #405d27;
+  transform: translateY(4px);
+}
+#inpAvsender{
+  padding:0.5rem;
+    font-size: 15px;
+
+}
+
+#inpMening{
+  padding:0.5rem;
+  font-size: 15px;
+}
+
+
   </style>
+
 </html>
