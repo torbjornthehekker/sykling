@@ -4,7 +4,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>Sykkelbiletene</title>
+	<title>Sykkelbilete</title>
 
 	</head>
 	<body>
@@ -26,28 +26,30 @@
 	<label>2</label>
 	<input type="text" id="inpTekst" required placeholder="Beskriv bildet">
 	<label>3</label>
-	<button class="button" type="submit">Last opp bilete</button>
-	<p class="søk"> Søk: </p><input id="sokefelt" type="text">
-
+	<button type="submit">Last opp bilete</button>
 	</form>
 	</header>
+	
 	<main></main>
+	
 	<div id="overlay">
 	<img src="bilder/giphy.gif">
 	</div>
+
+	
 	<script src="https://www.gstatic.com/firebasejs/5.8.5/firebase.js"></script>
-	<script>
-  	// Initialize Firebase
-  	var config = {
+<script>
+  // Initialize Firebase
+  var config = {
     apiKey: "AIzaSyCK8jvV-9V-1TE-c0GDWmp7MVLZpT8R2Tw",
     authDomain: "storage-a9d85.firebaseapp.com",
     databaseURL: "https://storage-a9d85.firebaseio.com",
     projectId: "storage-a9d85",
     storageBucket: "storage-a9d85.appspot.com",
     messagingSenderId: "444042841605"
-  	};
-  	firebase.initializeApp(config);
-	</script>
+  };
+  firebase.initializeApp(config);
+</script>
 	
 	
 <script>
@@ -55,21 +57,14 @@
 	const inpTekst = document.querySelector("#inpTekst");
 	const skjema = document.querySelector("#skjema");
 	const overlay = document.querySelector("#overlay");
+	
 	const main = document.querySelector("main");
-	const sokefelt = document.getElementById("sokefelt");
-    var soketekst ="";
 	
 	// Firebase
 	const db = firebase.database();
 	const storage = firebase.storage();
 	
 	const bloggen = db.ref("bloggen");
-
-	sokefelt.oninput = sok;
-   	function sok () {
-   		soketekst=sokefelt.value;
-		visUtvalg();
-    }
 	
 	
 	// Funksjon som lagrer bilde i databasen
@@ -98,14 +93,7 @@
 	} );
 	
 	}
-	function visUtvalg() {
-        main.innerHTML = " ";
-        bloggen
-               .orderByChild("tekst")
-               .startAt(soketekst)
-               .endAt(soketekst + '\uf8ff')
-               .on("child_added", visBilde);
-    }
+	
 	function visBilde(snap) {
 	const key = snap.key;
 	const data = snap.val();
@@ -161,24 +149,20 @@
   	background-color: #111;
 }
 	.active{
-  	background-color:#405d27;
+  	background-color:green;
 }
 	h1{
 	font-size: 3em;
 	text-align: center;
-	background-color: #405d27;
-	padding:20px;
-	border-radius: 25px;
-	text-align: center;
+	background-color: lightyellow;
 	}
-	
 	body {
 	margin: 0;
 	font-family: arial;
 }
 	
 	header {
-	background-color: #82b74b;
+	background-color: darkblue;
 }
 	
 	header #skjema {
@@ -191,20 +175,20 @@
 }
 
 	#skjema input[type=text] {
-	padding: 0.7rem;
+	padding: 0.5rem;
 }
 	
 	header label {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center; 
-	padding: 1rem;
-	width: 1.3rem;
-	height: 1.3rem;
+	padding: 0.5rem;
+	width: 2rem;
+	height: 2rem;
 	font-weight: 800;
-	background-color: #c1946a;
-	color: teal;
-	border-radius: 25%;
+	background-color: darkorange;
+	color: white;
+	border-radius: 50%;
 }
 	
 	main {
@@ -212,18 +196,20 @@
 	display: grid;
 	grid-template-columns: repeat(6, 1fr);
 	grid-gap: 1rem;
-	background-color:#3e4444;
+	background-color:lightyellow;
 }
 	
 	main article {
 	display: grid;
 	grid-auto-flow: row;
-	background-color: #c1946a;
+	background-color: pink;
 	cursor: pointer;
 }
+	
 	main img {
 	width: 100%;
 }
+	
 	main article p {
 	padding: 1rem;
 	text-align: center;
@@ -245,38 +231,6 @@
 
 	#overlay img {
 	width: 250px;
-}
-.button {
-  display: inline-block;
-  padding: 10px 10px;
-  font-size: 24px;
-  cursor: pointer;
-  text-align: center;
-  text-decoration: none;
-  outline: none;
-  color: white;
-  background-color: #c1946a;
-  border: none;
-  border-radius: 15px;
-  box-shadow: 5px 5px #999;
-}
-
-.button:hover {background-color: #82b74b}
-
-.button:active {
-  background-color: #405d27;
-  box-shadow:  5px #405d27;
-  transform: translateY(4px);
-}
-.søk{
-	font-size: 30px;
-	font-weight: 600;
-}
-#inpBilde{
-	font-size:30px;
-	width: 12em;
-	font-weight: 600;
-
 }
  </style>
 
