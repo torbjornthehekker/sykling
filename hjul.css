@@ -22,7 +22,7 @@ ul{
  	position:fixed;
  	top:0;
  	width:100%;
- 	z-index: 3;
+ 	z-index:3;
 }
 li{
 	float:left;
@@ -131,4 +131,11 @@ footer>p{
 	.container {
 		grid-template-columns:1fr;
 	}
-}
+	ul{
+		grid-template-columns: repeat(3, 1fr);	
+	}
+	li>a{
+		font-size: 10px;
+		padding: 6px 7px;
+	}
+} 
